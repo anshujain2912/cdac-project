@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>form validation</title>
+	<script type=text/javascript>
+	function validate(){
+		var a=document.forms["my form"]["nuser"].value;
+		var b=document.forms["my form"]["user"].value;
+		var c=document.forms["my form"]["pass"].value;
+		var d=document.forms["my form"]["email"].value;
+		var e=document.forms["my form"]["phone"].value;
+		if(a==" "){
+			alert("Name should not be empty");
+		}
+		else
+			if(document.getElementById("u").validity.patternMismatch){
+				alert("Name should be in capital letters");
+			}
+			else if(b==" "){
+				alert("User Name should not be empty");
+		}
+		else
+			if(document.getElementById("un").validity.patternMismatch){
+				alert("Name should have atleast 1 capital letters,atleast any special symbols like(@ or #), You should not use ("." and "_")");
+			}
+			else if(c==" "){
+				alert("Password should not be empty");
+		}
+		else
+			if(document.getElementById("p").validity.patternMismatch){
+				alert("Password should must contain one digit from 0-9,one lowercase,must contain at leat one special character,length at least 8 characters and maximum of 20");
+			}
+		else if(d==" "){
+				alert("Email should not be empty");
+		}
+		else
+			if(document.getElementById("em").validity.patternMismatch){
+				alert("Email should have atleast 1 capital letter,numbers and must have 1 special symbols @,after @ their should be either 2 or 3 words and 1 dot(.) after that their should be  either 2 or 3 words");
+			}	
+			else if(e==" "){
+				alert("phone number should not be empty");
+		}
+		else
+			if(document.getElementById("phno").validity.patternMismatch){
+				alert("Phone no should not start with '0' and the length should be 10 digit");
+			}
+	}
+	</script>
+</head>
+<body>
+<form name="my form" onsubmit="return validate()">
+		<h1>Create a new Account</h1>
+		<table>
+		<tr><td>Name</td><td><input type="text" name="nuser" id="u" pattern="[A-Z]*" required><br></td></tr>
+		<tr><td>User Name</td><td><input type="text" name="user" id="un" required><br></td></tr>
+		<tr><td>Password</td><td><input type="password" name="pass" id="p" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})" required><br></td></tr>
+		<tr><td>Email</td><td><input type="email" name="email" id="em" pattern="[[a-z]*\w[A-Z]+[0-9]*[@][a-z]{2,3}][\.]?\w[a-z]{2,3}]" required><br></td></tr>
+		<tr><td>Phone no</td><td><input type="text" name="phone" id="phno" pattern="/^[1-9][0-9]*\" required><br></td></tr>
+		<tr><td><p>Gender</p></td><td><input type="radio" name="gname" value="Male">Male &nbsp;&nbsp;&nbsp; <input type="radio" name="gname" value="Female">Female<br></p>
+		<tr><td>Security Question</td><td><input type="text" name="secrectQues" placeholder="Favorite teacher name" required><br></td></tr></table>
+		<tr><td>Nationality</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<select name="national">
+		<option value="1">USA</option>
+		<option value="2">India</option>
+		<option value="3">Pakistan</option>
+		<option value="4">Japan</option>
+		</select></td><br>
+		<p><input type="submit" value="Register">
+	&nbsp;&nbsp;&nbsp;<input type="button" onClick="location.href='login.html' " value="Login"></p></form>
+</body>
+</html>
