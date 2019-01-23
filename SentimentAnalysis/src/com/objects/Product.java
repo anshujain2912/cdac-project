@@ -1,11 +1,19 @@
 package com.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="product")
 public class Product {
 	private int id;
 	private String title;
 	private String description;
 	private int creatorId;
 	private String imageUrl;
+	public Product() {
+		
+	}
 	public Product(String title,String description,int creatorId,String imageUrl) {
 		this.title=title;
 		this.description=description;
