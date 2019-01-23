@@ -1,15 +1,19 @@
 package com.objects;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="product")
+
 public class Product {
 	private int id;
 	private String title;
 	private String description;
 	private int creatorId;
+	private String creatorName;
+	public String getCreatorName() {
+		return creatorName;
+	}
+	public void setCreatorName(String creatorName) {
+		this.creatorName = creatorName;
+	}
 	private String imageUrl;
 	public Product() {
 		

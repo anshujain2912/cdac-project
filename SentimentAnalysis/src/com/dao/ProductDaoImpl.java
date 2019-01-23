@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.objects.Product;
+import com.objects.ProductMapper;
 
 @Repository
 public class ProductDaoImpl implements IProductDao {
@@ -26,10 +27,10 @@ public class ProductDaoImpl implements IProductDao {
 //		Session session=sessionFactory.getCurrentSession();
 //		List<Product> productList=session.createQuery("from Product").list();
 		
-		List<Map<String, Object>> res=jdbcTemplate.queryForList("select * from product");
+		return jdbcTemplate.query("select product.*,user.name from product,user where user.id=product.creator_id",new ProductMapper());
 		
-		System.out.println(res.toString());
-		return null;
+		//System.out.println(res.toString());
+		//return null;
 	}
 
 	@Override
