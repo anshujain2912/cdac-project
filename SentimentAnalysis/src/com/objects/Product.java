@@ -1,6 +1,6 @@
 package com.objects;
 
-
+import org.springframework.web.multipart.MultipartFile;
 
 public class Product {
 	private int id;
@@ -8,6 +8,7 @@ public class Product {
 	private String description;
 	private int creatorId;
 	private String creatorName;
+	private MultipartFile productImage;
 	public String getCreatorName() {
 		return creatorName;
 	}
@@ -54,6 +55,15 @@ public class Product {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	
+	
+	public MultipartFile getProductImage() {
+		return productImage;
+	}
+	public void setProductImage(MultipartFile productImage) {
+		this.productImage = productImage;
+	}
+	
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", title=" + title + ", description=" + description + ", creatorId=" + creatorId

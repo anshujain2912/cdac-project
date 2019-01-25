@@ -39,4 +39,12 @@ public class ProductDaoImpl implements IProductDao {
 		return null;
 	}
 
+	@Override
+	public void addProduct(Product p) {
+		// TODO Auto-generated method stub
+		String sql="insert into product(title,description,creator_id,image_url) values('"+p.getTitle()+"','"+p.getDescription()+"','"+p.getCreatorId()+"','"+p.getImageUrl()+"')";
+		jdbcTemplate.update(sql);
+	}
+	
+
 }

@@ -7,4 +7,5 @@ import com.objects.Product;
 public interface IProductDao {
 	public List<Product> getAllProducts();
 	public List<Product> searchProduct(String query);
+	public void addProduct(Product product);
 }
