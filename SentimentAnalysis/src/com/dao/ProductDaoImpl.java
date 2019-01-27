@@ -27,7 +27,7 @@ public class ProductDaoImpl implements IProductDao {
 //		Session session=sessionFactory.getCurrentSession();
 //		List<Product> productList=session.createQuery("from Product").list();
 		
-		return jdbcTemplate.query("select product.*,user.name from product,user where user.id=product.creator_id",new ProductMapper());
+		return jdbcTemplate.query("select product.*,user.name from product,user where user.id=product.creator_id order by product.id desc",new ProductMapper());
 		
 		//System.out.println(res.toString());
 		//return null;

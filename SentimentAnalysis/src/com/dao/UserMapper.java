@@ -14,6 +14,8 @@ public class UserMapper implements RowMapper<User> {
 		// TODO Auto-generated method stub
 		
 		User user=new User();
+	    user.setId(rs.getInt("id"));
+
 	    user.setUserName(rs.getString("user_name"));
 
 	    user.setPassword(rs.getString("password"));

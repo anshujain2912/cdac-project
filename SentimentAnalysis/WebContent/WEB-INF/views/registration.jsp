@@ -144,7 +144,7 @@
 
                         <td></td>
 
-                        <td><a href="login.jsp">Login</a>
+                        <td><a href="login">Login</a>
 
                         </td>
 

@@ -8,6 +8,7 @@ public class Product {
 	private String description;
 	private int creatorId;
 	private String creatorName;
+	private String imageUrl;
 	private MultipartFile productImage;
 	public String getCreatorName() {
 		return creatorName;
@@ -15,7 +16,7 @@ public class Product {
 	public void setCreatorName(String creatorName) {
 		this.creatorName = creatorName;
 	}
-	private String imageUrl;
+	
 	public Product() {
 		
 	}

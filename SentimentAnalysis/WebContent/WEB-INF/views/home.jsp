@@ -1,4 +1,6 @@
 <%@page import="com.objects.Product" %>
+<%@page import="com.objects.Comment" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -12,6 +14,119 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+function fun2(){
+	
+}
+</script>
+
+<script type="text/javascript">
+function fun(productId){
+		document.getElementById(productId).innerHTML ="tinshutoy";
+
+	$.ajax({
+		url: "/SentimentAnalysis/viewComments/"+productId,
+	  	type: "GET",
+	  	
+	  	beforeSend: function(xhr) {
+	  		xhr.setRequestHeader("Accept", "application/json");
+	  		xhr.setRequestHeader("Content-Type", "application/json");
+	  		console.log("before");
+	  	},
+	  	
+	  	success: function(commentList) {
+	  		console.log("success "+commentList.toString());
+  			var respContent ="";
+
+  			for (var i=0; i<commentList.length; i++) {
+  				 
+  				respContent += commentList[i].userName+": "+ commentList[i].commentText + " <br> ";
+  			}
+	  		
+	  		
+			document.getElementById(productId).innerHTML =respContent;
+	  	}
+	});
+}
+
+function addComment(productId){
+	var comment=document.getElementById("tinshu").value;
+		console.log(comment);
+		var data = {}
+		data["commentText"] = comment;
+		data["productId"] = productId;
+
+	$.ajax({
+		url: "/SentimentAnalysis/addComment/",
+	  	type: "POST",
+        data: JSON.stringify(data),
+        dataType: "json",
+	  	beforeSend: function(xhr) {
+	  		xhr.setRequestHeader("Accept", "application/json");
+	  		xhr.setRequestHeader("Content-Type", "application/json");
+	  		console.log("before add comment");
+	  	},
+	  	
+	  	success: function(commentList) {
+	  		console.log("success "+commentList.toString());
+  			var respContent ="";
+
+  			for (var i=0; i<commentList.length; i++) {
+  				respContent += commentList[i].userName+": "+ commentList[i].commentText + " <br> ";
+  			}
+	  		
+	  		
+			document.getElementById(productId).innerHTML =respContent;
+	  	}
+});
+}
+	
+
+</script>
+<!-- 
+<script type="text/javascript">
+   
+    $(document).ready(function() {
+    	
+		var deleteLink = $("a:contains('Delete')");
+      
+		$(deleteLink).click(function(event) {
+    	  
+			$.ajax({
+				url: $(event.target).attr("href"),
+			  	type: "DELETE",
+			  	
+			  	beforeSend: function(xhr) {
+			  		xhr.setRequestHeader("Accept", "application/json");
+			  		xhr.setRequestHeader("Content-Type", "application/json");
+			  	},
+			  	
+			  	success: function(smartphone) {
+			  		var respContent = "";
+			  		var rowToDelete = $(event.target).closest("tr");
+			  		
+			  		rowToDelete.remove();
+			  		
+			  		respContent += "<span class='success'>Smartphone was deleted: [";
+			  		respContent += smartphone.producer + " : ";
+			  		respContent += smartphone.model + " : " ;
+			  		respContent += smartphone.price + "]</span>";
+			  		
+			  		document.getElementById("foo").getElementsByClassName("bar")[0].innerHTML = "Goodbye world!";			  	
+			}});
+  
+			event.preventDefault();
+		});
+       
+});   
+</script>
+
+ -->
+
+
 <style>
 html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 </style>
@@ -59,9 +174,9 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
          <h4 class="w3-center">My Profile</h4>
          <p class="w3-center"><img src="/SentimentAnalysis/resources/images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+         <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> ${user.name}</p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${user.emailId}</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i>${user.phoneNo}</p>
         </div>
       </div>
       <br>
@@ -69,15 +184,15 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
       <!-- Accordion -->
       <div class="w3-card w3-round">
         <div class="w3-white">
-          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Groups</button>
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Products</button>
           <div id="Demo1" class="w3-hide w3-container">
             <p>Some text..</p>
           </div>
-          <button onclick="myFunction('Demo2')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
+          <a href="addProduct" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> Add Product</a>
           <div id="Demo2" class="w3-hide w3-container">
             <p>Some other text..</p>
           </div>
-          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+          <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>View Profile</button>
           <div id="Demo3" class="w3-hide w3-container">
          <div class="w3-row-padding">
          <br>
@@ -146,8 +261,8 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               <h6 class="w3-opacity">Social Media template by w3.css</h6>
-              <p contenteditable="true" class="w3-border w3-padding">Status: Feeling Blue</p>
-              <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> &nbsp;Post</button> 
+              <p contenteditable="true" class="w3-border w3-padding">Serch Product</p>
+              <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i> &nbsp;Search</button> 
             </div>
           </div>
         </div>
@@ -191,8 +306,11 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
         <h4>${product.title}</h4>
         <img src=${product.imageUrl} style="width:100%" class="w3-margin-bottom">
         <p>${product.description}</p>
-        <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button> 
-        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> &nbsp;Comment</button> 
+        <input type="text" placeholder="Add Comment" style="width:80%" id="tinshu"/> <input type="button" onclick="addComment(${product.id})" id="post" value="Post"/><br><br>
+        <button type="button" onclick="fun2()" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i> &nbsp;Like</button> 
+        <button type="button" onclick="fun(${product.id})" class="w3-button w3-theme-d2 w3-margin-bottom" ><i class="fa fa-comment"></i> &nbsp;View All Comments</button> 
+        <div class="allComments" id="${product.id}"></div>
+        <div id="abcdef"></div>
       </div> 
       </c:forEach>
       

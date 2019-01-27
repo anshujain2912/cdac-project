@@ -5,12 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.objects.User;
 import com.services.IUserService;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 		
 		@Autowired
@@ -45,7 +47,8 @@ public class UserController {
 		public ModelAndView validateUser(@ModelAttribute("user") User user,ModelAndView model) {
 			User user1=userService.validateUser(user);
 			if(user1!=null) {
-				model.setViewName("home");
+				model.addObject("user", user1);
+				model.setViewName("redirect:/viewProducts");
 				return model;
 			}
 			else {
