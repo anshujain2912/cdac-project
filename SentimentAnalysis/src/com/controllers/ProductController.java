@@ -14,13 +14,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 //import javax.validation.Valid;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,17 +50,23 @@ public class ProductController{
 //	    }
 	
 	@RequestMapping(value="/viewProducts")
-	public ModelAndView getAllProducts(ModelAndView model) {
-		List<Product> listProduct=this.productService.getAllProducts();
+	public ModelAndView getAllProducts(@RequestParam(required = false) String query,ModelAndView model) {
+		List<Product> listProduct;
+		if(StringUtils.isEmpty(query)) {
+			listProduct=this.productService.getAllProducts();
+		}else {
+			listProduct=this.productService.searchProduct(query);
+
+		}
 		model.addObject("products", listProduct);
-		model.setViewName("home");
+		model.setViewName("tempHome1");
 		return model;
 	}
 	
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
     public ModelAndView product(ModelAndView model) {
 		model.addObject("product", new Product());
-		model.setViewName("test");
+		model.setViewName("tempAddProduct");
 		return model;
     }
 	
@@ -98,6 +109,15 @@ public class ProductController{
 		//ModelAndView model=new ModelAndView();
 		model.setViewName("redirect:/viewProducts");
 		return model;
+	}
+	@RequestMapping(value="/searchProduct/{query}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity searchProduct(@PathVariable String query) {
+		System.out.println(query);
+		List<Product> products=productService.searchProduct(query);
+		//model.addObject("products", products);
+		//model.setViewName("tempHome1");
+		return ResponseEntity.ok(products);
 	}
 	
 }

@@ -36,7 +36,8 @@ public class ProductDaoImpl implements IProductDao {
 	@Override
 	public List<Product> searchProduct(String query) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql="select product.*,user.name from product,user where user.id=product.creator_id and product.title like '%" + query + "%' order by product.id desc ";
+		return jdbcTemplate.query(sql, new ProductMapper());
 	}
 
 	@Override

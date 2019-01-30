@@ -19,9 +19,10 @@
 <mvc:annotation-driven/> 
 
 <context:component-scan base-package="com"> </context:component-scan>
-
-
+ <mvc:resources mapping="/resources/**" location="/resources/" />  
 <mvc:resources mapping="/files/**" location="file:/home/anshujain/Pictures/Products/" />
+  <mvc:resources mapping="/**" location="/resources/" /> 
+
 	<bean 
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

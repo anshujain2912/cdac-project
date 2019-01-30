@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.objects.ChangePasswordRequest;
 import com.objects.User;
 import com.services.IUserService;
 
@@ -20,7 +21,7 @@ public class UserController {
 		
 		@RequestMapping(value = "/", method = RequestMethod.GET)
 		   public ModelAndView user() {
-		      return new ModelAndView("registration", "user", new User());
+		      return new ModelAndView("tempReg", "user", new User());
 		   }
 		
 		@RequestMapping(value="/addUser", method=RequestMethod.POST)
@@ -28,19 +29,19 @@ public class UserController {
 			try {
 			userService.addUser(user);
 			//model.addObject("msg","Registration Successfull");
-			model.setViewName("login");
+			model.setViewName("tempReg");
 			return model;
 			}
 			catch(Exception e) {
 				model.addObject("msg","Error");
-				model.setViewName("registration");
+				model.setViewName("tempReg");
 				return model;
 			}
 		}
 		
 		@RequestMapping(value = "/login", method = RequestMethod.GET)
 	   public ModelAndView login() {
-	      return new ModelAndView("login", "user", new User());
+	      return new ModelAndView("tempReg", "user", new User());
 	   }
 		
 		@RequestMapping(value="/loginProcess")
@@ -53,8 +54,24 @@ public class UserController {
 			}
 			else {
 				model.addObject("msg", "login credentials are incorrect");
-				model.setViewName("login");
+				model.setViewName("tempReg");
 				return model;
 			}
 		}
+		
+		@RequestMapping(value = "/password", method = RequestMethod.GET)
+		 public ModelAndView password(@ModelAttribute("user") User user) {
+		      return new ModelAndView("changePassword", "user",user);
+		   }
+			
+			@RequestMapping(value="/changePassword")
+			public ModelAndView changePassword(@ModelAttribute("user") User user,@ModelAttribute("updatePassword") ChangePasswordRequest request, ModelAndView model) {
+				request.setUserId(user.getId());
+				String msg=userService.changePassword(user,request);
+				model.addObject("msg", msg);
+				model.addObject("user", user);
+
+				model.setViewName("changePassword");
+				return model;
+				}
 }

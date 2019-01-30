@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dao.ICommentDao;
 import com.objects.Comment;
 import com.objects.Product;
+import com.sentiment.Test;
 import com.services.ICommentService;
 
 @Service
@@ -15,6 +16,8 @@ public class CommentServiceImpl implements ICommentService{
 	
 	@Autowired
 	private ICommentDao commentDao;
+	@Autowired
+	private Test test;
 	@Override
 	public List<Comment> getAllComments(int productId) {
 		// TODO Auto-generated method stub
@@ -23,7 +26,9 @@ public class CommentServiceImpl implements ICommentService{
 	@Override
 	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
-		comment.setSentiment("Neutral");
+		String sentiment = test.fun(comment.getCommentText());
+		System.out.println(sentiment);
+		comment.setSentiment(sentiment);
 		return commentDao.addComment(comment);
 	}
 
