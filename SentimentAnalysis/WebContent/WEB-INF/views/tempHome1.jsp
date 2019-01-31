@@ -282,7 +282,7 @@
 									<div class="feature-img">
 										<img class="img-fluid" src="${product.imageUrl}" alt="">
 									</div>
-									<a class="posts-title" href="blog-single.html"><h3>${product.title}</h3></a>
+									<a class="posts-title" ><h3>${product.title}</h3></a>
 									<p class="excert">
 										${product.description}
 									</p>

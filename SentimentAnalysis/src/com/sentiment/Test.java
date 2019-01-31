@@ -23,7 +23,7 @@ public class Test {
 	@Autowired
 	private AppConfig config;
 	
-	private static final String apiKey = "804a8ae87c4e945cf89152bf3c0861c1";
+	private static final String apiKey =null;
 	private static final String apiUrl = "http://api.datumbox.com/1.0/SentimentAnalysis.json";
 
 	public String fun(String s) {

@@ -40,7 +40,7 @@
 					<div class="row align-items-center justify-content-between d-flex">
 				      <div id="logo" class="form-group form-inline">
 				       <img src="img/logo.png" placeholder="Smart Reviews" alt="Smart Reviews" title="Smart Reviews" /> <h4 class="text-white">Smart Reviews</h4>
-				      </div>
+				      </div>	
 				      <nav id="nav-menu-container">
 				        <ul class="nav-menu">
 				          <li><a href="viewProducts">Home</a></li>
